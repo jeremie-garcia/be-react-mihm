@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/be-react-mihm/static/css/main.7483b6ef.chunk.css",
+    "main.js": "/be-react-mihm/static/js/main.ad3e4253.chunk.js",
+    "main.js.map": "/be-react-mihm/static/js/main.ad3e4253.chunk.js.map",
+    "runtime-main.js": "/be-react-mihm/static/js/runtime-main.1fc7b397.js",
+    "runtime-main.js.map": "/be-react-mihm/static/js/runtime-main.1fc7b397.js.map",
+    "static/css/2.a43048fe.chunk.css": "/be-react-mihm/static/css/2.a43048fe.chunk.css",
+    "static/js/2.e5f8efed.chunk.js": "/be-react-mihm/static/js/2.e5f8efed.chunk.js",
+    "static/js/2.e5f8efed.chunk.js.map": "/be-react-mihm/static/js/2.e5f8efed.chunk.js.map",
+    "index.html": "/be-react-mihm/index.html",
+    "static/css/2.a43048fe.chunk.css.map": "/be-react-mihm/static/css/2.a43048fe.chunk.css.map",
+    "static/css/main.7483b6ef.chunk.css.map": "/be-react-mihm/static/css/main.7483b6ef.chunk.css.map",
+    "static/js/2.e5f8efed.chunk.js.LICENSE.txt": "/be-react-mihm/static/js/2.e5f8efed.chunk.js.LICENSE.txt",
+    "static/media/airport.5dadd7de.svg": "/be-react-mihm/static/media/airport.5dadd7de.svg",
+    "static/media/logo.9ce6552a.svg": "/be-react-mihm/static/media/logo.9ce6552a.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1fc7b397.js",
+    "static/css/2.a43048fe.chunk.css",
+    "static/js/2.e5f8efed.chunk.js",
+    "static/css/main.7483b6ef.chunk.css",
+    "static/js/main.ad3e4253.chunk.js"
+  ]
+}

@@ -95,7 +95,7 @@ Utilisez ce contenu et des composants bootstrap (Jumbotron, Container, Row, Col)
                         </p>
 
                         <h2>Détail des pages disponibles</h2>
-                        <p> La page Carte permet de voir les plans vols sur une carte et des les
+                        <p> La page Carte permet de voir les plans vols sur une carte et de les
                             modifier.</p>
                         <p> La page Balise permet de voir les balises dans une liste.</p>
 ```
@@ -138,20 +138,77 @@ Vous devez pouvoir afficher l'id de la premiere balise dans votre composant Bali
 const data = require("./db/FPL-20180119-extract.json");
 ```
 
-Pour générer une table rapidement affichant l'ensemble des données, nous pouvons utiliser la librairie
+Pour générer une table rapidement avec l'ensemble des données, nous pouvons utiliser la librairie
 [react-bootstrap-table-next](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/getting-started.html).
 Pensez à utiliser des classe Bootstrap comme un container sur cette page.
 
+Pour ajouter des fonctionnalité de pagination, la librairie [react-bootstrap-table2-paginator](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/basic-pagination.html) s'intègre simplement.
+
+
+Vous devez maintenant avoir une application avec plusieurs pages/route, l'acceuil et les la liste de balises affichée.
+Nous allons passer à 'laffichage des plans de vols dans une liste te sur une carte.
 
 ## Deuxième partie : la carte
 Pour afficher les plans de vols, nous alons tout d'abord afficher une carte avec les aéroports et les balises.
 Nous afficherons ensuite les plans de vols dans une liste puis, lorsqu'ils sont sélectionés, les plans de vols sur la carte.
 
 ### Composant carte leaflet
+Vous allez créer un composant Map qui sera affichée dans la page Carte en dessous du titre.
+Nous allons utiliser [React Leaflet](https://react-leaflet.js.org/) pour faciliter l'intérgration d'une carte Leaflet.
+Suivez les exemples pour afficher une carte centrée sur la france lors de l'affichage de la page.
+Pensez à ajouter du style à vos composant via un fichier Map.css que vous chargerez das votre composant.
+Il vous faut une largeur de 100% et une hauteur minimale pas trop faible.
+Pensez à mettre en forme la page avec des composants bootstrap.
 
-### Ajout de markers sur la carte (beacons)
 
-### Ajout des aéroports
+### Ajout de markers sur la carte (beacons et aéroport)
+Pour ajouter les marqueurs de balises et d'aéroport sur la carte, nous devons passer la liste des balises et d'aéroports à notre composant comme props.
+Vous devriez avoir quelque chose ressemblant à cela :
+
+```shell script
+<Map airports={airports_array} beacons={beacons_array}/>
+```
+La documentation de [leafLet React](https://react-leaflet.js.org/docs/example-layers-control) donne des précisions sur la façons de créer des Overlays avec des markers à l'intérerieur.
+
+```html
+ <LayersControl>
+                <BaseLayer checked name="OpenStreetMap">
+                    <TileLayer
+                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                </BaseLayer>
+                <Overlay checked name = "airports">
+                    <LayerGroup  >
+                        {airportsMarkers}
+                    </LayerGroup>
+                </Overlay>
+            </LayersControl>
+```
+Dans cet exemple de code, l'élément {airportsMarkers} correspond à une liste de composants React créés dans notre composants carte qui représentent les aéroports dans des marqueurs.
+
+Pour construire cette liste, nous allons itérer sur la props.airports du composant Map. Une approche classique est d'utiliser la fonction [Map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map) qui permet de transformer une liste en une autre lise.
+Ici, nous voulons transformer la liste d'objet aéroport et liste de [Markers Leaflet](https://react-leaflet.js.org/docs/start-setup).
+
+<details>
+
+  <summary>Aide</summary>
+  
+  ```javascript
+const airportsMarkers = props.airports.map((apt) =>
+            <Marker position={[apt.latitude, apt.longitude]}
+                    icon = {iconApt}
+                    key={apt.id}>
+                <Popup>
+                    Airport Name : {apt.name}
+                    Airport Id : {apt.id}
+                </Popup>
+            </Marker>
+    );
+  ```
+</details>
+
+
 
 ### Liste des plans de vol
 

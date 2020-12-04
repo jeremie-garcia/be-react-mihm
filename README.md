@@ -56,7 +56,7 @@ Enfin, un footer peut être ajouté (bonus).
 ### Navigation
 Pour la Navigation et la routage, il faut utiliser des Composants fournis par le module router-dom.
 En particulier, les composants suivants vous seront utiles.
-```shell script
+```javascript
 import {
     BrowserRouter as Router,
     Switch,
@@ -80,7 +80,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 Utilisez ce contenu et des composants bootstrap (Jumbotron, Container, Row, Col) pour réaliser la page home.
 
 
-```shell script
+```html
  <h1> Visualisation de plans de vol</h1>
                         <p>
                             Il s'agit d'une SPA (Single Page Application codée avec React pour le MIHM.
@@ -113,7 +113,7 @@ Cette page fournie un exemple de [navigation react bootstrap](https://react-boot
 Nous allons créer un composant pour afficher la liste des balises dans une table bootstrap.
 Pour créer un composant, il faut créer un fichier balise.js qui contient le code suivant :
 
-```shell script
+```javascript
 import React from 'react';
 
 function Balises(props){
@@ -134,7 +134,7 @@ Il va maintenant falloir créer une table bootstrap et afficher les données de 
 Je vous conseille de lire ce fichier depuis le fichier App.js avec une instruction du type et de le passer comme props à votre composant Balise.
 POur en savoir plus sur les props, lisez ce [guide](https://fr.reactjs.org/docs/components-and-props.html).
 Vous devez pouvoir afficher l'id de la premiere balise dans votre composant Balise avant de continuer.
-```shell script
+```javascript
 const data = require("./db/FPL-20180119-extract.json");
 ```
 
@@ -165,11 +165,15 @@ Pensez à mettre en forme la page avec des composants bootstrap.
 Pour ajouter les marqueurs de balises et d'aéroport sur la carte, nous devons passer la liste des balises et d'aéroports à notre composant comme props.
 Vous devriez avoir quelque chose ressemblant à cela :
 
-```shell script
+```javascript
 <Map airports={airports_array} beacons={beacons_array}/>
 ```
 La documentation de [leafLet React](https://react-leaflet.js.org/docs/example-layers-control) donne des précisions sur la façons de créer des Overlays avec des markers à l'intérerieur.
 
+<details>
+
+<summary>Aide</summary>
+ 
 ```html
  <LayersControl>
                 <BaseLayer checked name="OpenStreetMap">
@@ -183,18 +187,23 @@ La documentation de [leafLet React](https://react-leaflet.js.org/docs/example-la
                         {airportsMarkers}
                     </LayerGroup>
                 </Overlay>
-            </LayersControl>
+</LayersControl>
 ```
+</details>
+
 Dans cet exemple de code, l'élément {airportsMarkers} correspond à une liste de composants React créés dans notre composants carte qui représentent les aéroports dans des marqueurs.
 
-Pour construire cette liste, nous allons itérer sur la props.airports du composant Map. Une approche classique est d'utiliser la fonction [Map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map) qui permet de transformer une liste en une autre lise.
+Pour construire cette liste, nous allons itérer sur la props.airports du composant Map. Une approche classique est d'utiliser la fonction [Map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map) qui permet de transformer une liste en une autre liste.
+Voici un exemple d'utilisation de [map avec React](https://fr.reactjs.org/docs/lists-and-keys.html).
 Ici, nous voulons transformer la liste d'objet aéroport et liste de [Markers Leaflet](https://react-leaflet.js.org/docs/start-setup).
+Ainsi pour chaque élements de la liste d'aéroport, vous allez créer un composant Marker. Vous pouvez utiliser une icone dédiée en créant une Icone Leaflet avec la fonction L.Icon().
+Attention, avec React, les composants d'une liste doivent avoir un champs [key unique](https://fr.reactjs.org/docs/lists-and-keys.html) qui va permettre à React de les mettre à jour correctement. Vous pouvez utiliser le nom de l'aéroport comme clef.
 
 <details>
 
   <summary>Aide</summary>
   
-  ```javascript
+```javascript
 const airportsMarkers = props.airports.map((apt) =>
             <Marker position={[apt.latitude, apt.longitude]}
                     icon = {iconApt}
@@ -208,13 +217,170 @@ const airportsMarkers = props.airports.map((apt) =>
   ```
 </details>
 
+Les aéroports doivent désormais s'afficher sur la carte dans un calque dédié.
+Procédez de même pour afficher les balises. Vous pouvez utiliser une icone spécifique ou utiliser le composant [Circle](https://react-leaflet.js.org/docs/api-components/#pane-behavior) de Leaflet.
 
 
 ### Liste des plans de vol
+Nous allons maintenant afficher une liste des plans de vols à gauche de notre page.
+Pour cela vous devez modifier votre mise en page avec Bootstrap pour avoir une colone de la largeur 3 pour la liste des vols et une autre de largeur 9 pour la carte.
+Créez ensuite un composant Fpls.js qui récupère les plans de vols et ajoutez le à votre application.
 
-### Sélection de plan de vol
+Pour créer le contenu du composant, vous pouvez utiliser les composants [ListGroup et ListItem](https://react-bootstrap.github.io/components/list-group/) de React bootstrap.
+Ici encore, vous pouvez utiliser la fonction map pour transformer la liste des plans de vols en liste de composants React.
+Pensez à donner une hauteur à votre composant ListGroup afin qu'il s'affiche correctement. Pour le rendre scrollable, l'option  overflowY: 'scroll' permet d'obtenir le comportement.
 
-### lien entre les composants
-COntainers
-hooks
+<details>
+
+  <summary>Aide</summary>
+  
+```html
+<ListGroup style={{
+                cursor: "pointer",
+                width: '100%',
+                height:'60vh',
+                overflowY: 'scroll'
+            }}>
+                {fpls_items}
+</ListGroup>
+  ```
+</details>
+
+### Sélection de plan de vol - Les états
+Pour sélectionner des plan de vol dans la liste, nous allons créer un état selection qui gardera en mémoire les IDs des plans de vols sélectionnés.
+Pour comprendre le fonctionnement des états en React je conseille la lecture de cet [article](https://fr.reactjs.org/docs/hooks-state.html).
+Lorsqu'un état est mis à jour dans l'application, React s'occupe de mettre à jour les composants qui utilisent cet état.
+
+<details>
+
+  <summary>Aide</summary>
+  
+```javascript
+const [selection, setSelection] = useState([]);
+  ```
+</details>
+
+
+Dans notre application, on souhaite que l'apparence d'un vol sélectionné soit dépendante de la présence de ce vol dans l'état de selection (en utilisant par exemple la propriété active= (true or false) de ListGroupItem).
+Essayer votre code en initialisant l'état selection avec quelques IDS de vols existants;
+
+Pour modifier notre état selection, nous devons ajouter un abonnement à l'évenement click des ListGroupItem.
+Par exemple nous pouvons appeler la fonction update selection qui mettra à jour l'état de selection avec l'id du plan de vol correspondant.
+
+```javascript
+onClick={() => toggleSelection(fpl.id)}>
+```
+Si l'état ne contient pas l'ID, on l'ajoute, si il le contient, on l'enlève. pensez à utiliser la méthode setSelection pour remplacer le tableau par un nouveau.
+Pour ajouter un élément et faire une copie, cette notation javascript est pratique et très utilisée 
+
+```javascript
+const newSelection = [...selection, newfplId];
+```
+
+Vous devez maintenant avoir une liste fonctionnelle qui met à jour la liste des flights IDs dans l'état selection.
+
+### Lien entre les composants, utilisation de containeur
+Pour faire le lien entre le composant Fpls et Map, il est conseillé de créer un composant container FplsMap.js qui s'occupera des données d'état et passera celle ci comme des props aux composants Fpls et Map.
+Modifier votre architecture pour utiliser ces nouveau composants et faire en sorte que l'état sélection soit dans le composant FplsMap.js.
+
+Deux états seront utilisés (il est possible de faire avec un seul mais cela permet de ne pas trop modifier le code fait jusqu'à présent) dans le composant FplsMap qui seront passés aux composants Fpls et Map comme des props.
+
+```javascript
+const [selection, setSelection] = useState([]);
+const [selected_fpls, setSelectedFpls] = useState([]);
+```
+
+La méthode toggleSelection doit être déplacée dans FplsMap également et fournie au composant Fpls comme props.
+
+<details>
+
+  <summary>Aide</summary>
+  
+```html
+   <Row>
+            <Col>
+                <h4>Plans de vol</h4>
+                <Fpls fpls={props.fpls} onClick={toggleSelection} selection={selection}/>
+            </Col>
+            <Col xs={9}>
+                <h4>Carte</h4>
+                <Map airports={props.airports} beacons={props.beacons} fpls={selected_fpls}/>
+            </Col>
+    </Row>
+  ```
+</details>
+
+Vous devez avoir un comportement similaire à celui précédemment mais avec une nouvelle architecture.
+
+### Affichage des Plans de vols selectionnés.
+Pour afficher les plans de vols sélectionnés, le composant carte utilisera les données de l'état selected_fpls.
+Commencer par modifier cet état lorsque la l'état sélection est modifié.
+Pour cela nous pouvons utiliser un [effet React](https://fr.reactjs.org/docs/hooks-reference.html#useeffect) qui modifiera la liste des plans de vols selectionnés lorsque l'état selection est modifié.
+Pour faciliter la création d'une liste de plan de vol à partir d'un Id dans la selection, vous pouvez créer un dictionnaire des plans de vols par id.
+Une façon courante de réaliser cette opréation en javascript se fait avec l'utilisation de la fonction [reduce](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/reduce).
+
+```javascript
+const fpls = props.fpls;
+const fpls_dict = fpls.reduce((a,x) => ({...a, [x.id]: x}), {});
+```
+
+<details>
+
+  <summary>Aide</summary>
+  
+```javascript
+useEffect(
+        () => {
+            if(selection.length>0){
+                setSelectedFpls(selection.map(id => fpls_dict[id]));
+            }else{
+                setSelectedFpls([]);
+            }
+        },
+        [selection],
+    );
+
+  ```
+</details>
+
+Nous avons donc désormais une liste de plan de vol qui est mise à jour lorsque la selection dans la liste change.
+Cette liste étant fournie au composant Map comme props. Nous allons nous en servir pour afficher les plans de vols sur la carte.
+
+
+Un plan de vol contient une aéroport de départ et une liste de balise.
+Pour l'afficher sur la carte nous pouvons utiliser un composant Leaflet [Polyline](https://react-leaflet.js.org/docs/api-components#polyline) que l'on construit à partir d'une liste de corrdonnées GPS.
+Ainsi, pour chaque élements du plan de vol il faut récupérer les coordonnées GPS et les ajouter dans un tableau.
+```html
+ <Polyline
+                positions={getFplPositions(fpl)}
+                color="purple"
+                weight={2}
+            >
+  ```
+Pour obtenir ces coordonnées plus simplement, vous pouvez créer un dictionnaire qui associe à chaque ID (balise et aéroport) l'objet concerné ou ses coordonées.
+````javascript
+const coords_dict = {...airports_dict, ...beacons_dict};
+````
+En parcourant ce dictionnaire pour l'aéroport de départ, la liste des balises et l'aéroport d'arrivée vous povez construire la listes des posisiotns nécessaires.
+<details>
+
+  <summary>Aide</summary>
+  
+```javascript
+ const getFplPositions = (fpl) => {
+        const bPositions = fpl.beacons.map((b) => [coords_dict[b.name].latitude, coords_dict[b.name].longitude]);
+        return [
+            [coords_dict[fpl.d_airport].latitude,coords_dict[fpl.d_airport].longitude],
+            ...bPositions,
+            [coords_dict[fpl.a_airport].latitude,coords_dict[fpl.a_airport].longitude]
+        ] };
+
+```
+</details>
+
+Améliorez l'affichage en ajoutant des Markers pour chaque balises du plan de vol en indiquant le nom, le temps de passage et l'altitude.
+
+
+# Troisième partie : Modification d'un plan de vol et store Redux
+TBD
 

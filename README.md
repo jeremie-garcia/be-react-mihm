@@ -86,18 +86,14 @@ Utilisez ce contenu et des composants bootstrap (Jumbotron, Container, Row, Col)
                             Il s'agit d'une SPA (Single Page Application codée avec React pour le MIHM.
                         </p>
                         <p>
-                            <a href="https://jeremie-garcia.github.io/be-react-mihm/"> Pour voir une version
-                                finale de ce BE </a>
-                        </p>
-                        <p>
                             <a href="https://github.com/jeremie-garcia/be-react-mihm"> Pour le dépot initial du
                                 BE et des instructions </a>
                         </p>
 
                         <h2>Détail des pages disponibles</h2>
-                        <p> La page Carte permet de voir les plans vols sur une carte et de les
+                        <p> La page <Link to="carte">Carte</Link>  permet de voir les plans vols sur une carte et de les
                             modifier.</p>
-                        <p> La page Balise permet de voir les balises dans une liste.</p>
+                        <p> La page <Link to="balise">Balise</Link> permet de voir les balises dans une liste.</p>
 ```
 
 ### Navigation Bootstrap (Bonus)

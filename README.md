@@ -39,8 +39,8 @@ Vous devez copier ces fichier dans une dossier (par exemple /db) dans le dossier
 
 Vous devez également étudier ces fichiers pour comprendre leur structure et les données qu'ils contiennent car ce sont les données que nous utiliserons dans l'application React.
 
-## Créations de l'acceuil, des routes et de la navigation
-Nous allons commencer par réaliser les parties statiques, la page d'acceuil et la navigation de notre application.
+## Créations de l'accueil, des routes et de la navigation
+Nous allons commencer par réaliser les parties statiques, la page d'accueil et la navigation de notre application.
 Nous alons agalement réaliser des pages pour Carte et Balises.
 
 Le routage en React se fera avec la librairie [router-dom](https://reactrouter.com/web/guides/quick-start) que vous devez installer via la commande :
@@ -49,8 +49,8 @@ npm install --save react-router-dom
 ```
 
 ### Mise en place du squelette et des routes de l'application
-L'application dispose d'une navigation permettant de retourner à l'acceuil, à la page balises et à la page carte.
-Ensuite il faut créer plusieurs routes pour afficher le contenu de chacunes des pages (acceuil, balises et carte).
+L'application dispose d'une navigation permettant de retourner à l'accueil, à la page balises et à la page carte.
+Ensuite il faut créer plusieurs routes pour afficher le contenu de chacunes des pages (accueil, balises et carte).
 Enfin, un footer peut être ajouté (bonus).
 
 ### Navigation
@@ -124,7 +124,9 @@ export default Balises;
 ```
 
 Vous pouvez utiliser ce composant dans le fichier App.js de la façon suivante  :
+```html
 <Balises/>.
+```
 
 Il va maintenant falloir créer une table bootstrap et afficher les données de balises contenu dans notre fichier json.
 Je vous conseille de lire ce fichier depuis le fichier App.js avec une instruction du type et de le passer comme props à votre composant Balise.
@@ -141,11 +143,11 @@ Pensez à utiliser des classe Bootstrap comme un container sur cette page.
 Pour ajouter des fonctionnalité de pagination, la librairie [react-bootstrap-table2-paginator](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/basic-pagination.html) s'intègre simplement.
 
 
-Vous devez maintenant avoir une application avec plusieurs pages/route, l'acceuil et les la liste de balises affichée.
+Vous devez maintenant avoir une application avec plusieurs pages/route, l'accueil et les la liste de balises affichée.
 Nous allons passer à 'laffichage des plans de vols dans une liste te sur une carte.
 
 ## Deuxième partie : la carte
-Pour afficher les plans de vols, nous alons tout d'abord afficher une carte avec les aéroports et les balises.
+Pour afficher les plans de vols, nous allons tout d'abord afficher une carte avec les aéroports et les balises.
 Nous afficherons ensuite les plans de vols dans une liste puis, lorsqu'ils sont sélectionés, les plans de vols sur la carte.
 
 ### Composant carte leaflet

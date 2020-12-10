@@ -26,7 +26,7 @@ npm run start
 ```
 Vous permettra de lancer l'application en mode de développement.
 Par défaut, des outils comme [babel](https://babeljs.io/) et [webpack](https://webpack.js.org/) sont utilisés pour traiter tout vos fichiers, les convertir et les optimiser.
-Nous ne traiterons pas de ces outils dans le BE mais nous les utiliserons.
+Le BE ne traite pas de ces outils directement mais le utilise.
 A noter, que la commande start utilise des outils qui surveillent votre code pour le mettre à jour dès que vous sauvegardez un fichier html, css ou js.
 
 
@@ -37,11 +37,11 @@ Ces fichiers json contiennent des liste d'aéroports aven nom et coordonnées GP
 
 Vous devez copier ces fichier dans une dossier (par exemple /db) dans le dossier src de votre application.
 
-Vous devez également étudier ces fichiers pour comprendre leur structure et les données qu'ils contiennent car ce sont les données que nous utiliserons dans l'application React.
+Vous devez également étudier ces fichiers pour comprendre leur structure et les données qu'ils contiennent car ce sont les données que vous utiliserez dans l'application React.
 
 ## Créations de l'accueil, des routes et de la navigation
-Nous allons commencer par réaliser les parties statiques, la page d'accueil et la navigation de notre application.
-Nous alons agalement réaliser des pages pour Carte et Balises.
+Vous allez commencer par réaliser les parties statiques, la page d'accueil et la navigation de notre application.
+Vous allez également réaliser des pages pour Carte et Balises.
 
 Le routage en React se fera avec la librairie [router-dom](https://reactrouter.com/web/guides/quick-start) que vous devez installer via la commande :
 ```shell script
@@ -64,11 +64,11 @@ import {
 } from "react-router-dom";
 ```
 Vous pouvez vous inspirer d'exemples comme ceux de [basic_router](https://gist.github.com/siakaramalegos/df4620c52e829f6107c75d5c3f0ad7f5) ou [react-router](https://reactrouter.com/web/guides/quick-start).
-Les pages au contenu dynamique (balises et carte) seront traitées un peu plus tard mais pour l'instant nous nous contenterons d'ajouter un balise h1 avec un titre correspondant à la page.
+Les pages au contenu dynamique (balises et carte) seront traitées un peu plus tard mais pour l'instant vous ajouterez une balise h1 avec un titre correspondant à la page.
 
 
 ### Utilisation de classe Bootstrap
-Nous utiliserons aussi Bootstrap et la librarie [React-Boostrap](https://react-bootstrap.github.io/getting-started/introduction) qui fournie des composant React pour Bootstrap que vous pouvez installer avec la la commande :
+Vous utiliserez aussi Bootstrap et la librarie [React-Boostrap](https://react-bootstrap.github.io/getting-started/introduction) qui fournie des composant React pour Bootstrap que vous pouvez installer avec la la commande :
 
 ```shell script
 npm install --save react-bootstrap bootstrap
@@ -106,8 +106,8 @@ Cette page fournie un exemple de [navigation react bootstrap](https://react-boot
 
 ## Premier Composant : la liste des balises
 
-Nous allons créer un composant pour afficher la liste des balises dans une table bootstrap.
-Pour créer un composant, il faut créer un fichier balise.js qui contient le code suivant :
+Créez un composant pour afficher la liste des balises dans une table bootstrap.
+Pour créer un composant, il faut ajouter un fichier balise.js qui contient le code suivant :
 
 ```javascript
 import React from 'react';
@@ -136,7 +136,7 @@ Vous devez pouvoir afficher l'id de la premiere balise dans votre composant Bali
 const data = require("./db/FPL-20180119-extract.json");
 ```
 
-Pour générer une table rapidement avec l'ensemble des données, nous pouvons utiliser la librairie
+Pour générer une table rapidement avec l'ensemble des données, vous pouvez utiliser la librairie
 [react-bootstrap-table-next](https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/getting-started.html).
 Pensez à utiliser des classe Bootstrap comme un container sur cette page.
 
@@ -144,15 +144,14 @@ Pour ajouter des fonctionnalité de pagination, la librairie [react-bootstrap-ta
 
 
 Vous devez maintenant avoir une application avec plusieurs pages/route, l'accueil et les la liste de balises affichée.
-Nous allons passer à 'laffichage des plans de vols dans une liste te sur une carte.
 
 ## Deuxième partie : la carte
-Pour afficher les plans de vols, nous allons tout d'abord afficher une carte avec les aéroports et les balises.
-Nous afficherons ensuite les plans de vols dans une liste puis, lorsqu'ils sont sélectionés, les plans de vols sur la carte.
+Pour afficher les plans de vols, vous devez être capable d'afficher une carte avec les aéroports et les balises.
+Vous afficherez ensuite les plans de vols dans une liste puis, lorsqu'ils sont sélectionés, les plans de vols sur la carte.
 
 ### Composant carte leaflet
 Vous allez créer un composant Map qui sera affichée dans la page Carte en dessous du titre.
-Nous allons utiliser [React Leaflet](https://react-leaflet.js.org/) pour faciliter l'intérgration d'une carte Leaflet.
+Vous pouvez utiliser [React Leaflet](https://react-leaflet.js.org/) pour faciliter l'intégration d'une carte Leaflet.
 Suivez les exemples pour afficher une carte centrée sur la france lors de l'affichage de la page.
 Pensez à ajouter du style à vos composant via un fichier Map.css que vous chargerez das votre composant.
 Il vous faut une largeur de 100% et une hauteur minimale pas trop faible.
@@ -160,7 +159,7 @@ Pensez à mettre en forme la page avec des composants bootstrap.
 
 
 ### Ajout de markers sur la carte (beacons et aéroport)
-Pour ajouter les marqueurs de balises et d'aéroport sur la carte, nous devons passer la liste des balises et d'aéroports à notre composant comme props.
+Pour ajouter les marqueurs de balises et d'aéroport sur la carte, vous devez passer la liste des balises et d'aéroports à notre composant comme props.
 Vous devriez avoir quelque chose ressemblant à cela :
 
 ```javascript
@@ -191,9 +190,9 @@ La documentation de [leafLet React](https://react-leaflet.js.org/docs/example-la
 
 Dans cet exemple de code, l'élément {airportsMarkers} correspond à une liste de composants React créés dans notre composants carte qui représentent les aéroports dans des marqueurs.
 
-Pour construire cette liste, nous allons itérer sur la props.airports du composant Map. Une approche classique est d'utiliser la fonction [Map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map) qui permet de transformer une liste en une autre liste.
+Pour construire cette liste, vous devez itérer sur la props.airports du composant Map. Une approche classique est d'utiliser la fonction [Map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map) qui permet de transformer une liste en une autre liste.
 Voici un exemple d'utilisation de [map avec React](https://fr.reactjs.org/docs/lists-and-keys.html).
-Ici, nous voulons transformer la liste d'objet aéroport et liste de [Markers Leaflet](https://react-leaflet.js.org/docs/start-setup).
+Il faut transformer la liste d'objet aéroport et liste de [Markers Leaflet](https://react-leaflet.js.org/docs/start-setup).
 Ainsi pour chaque élements de la liste d'aéroport, vous allez créer un composant Marker. Vous pouvez utiliser une icone dédiée en créant une Icone Leaflet avec la fonction L.Icon().
 Attention, avec React, les composants d'une liste doivent avoir un champs [key unique](https://fr.reactjs.org/docs/lists-and-keys.html) qui va permettre à React de les mettre à jour correctement. Vous pouvez utiliser le nom de l'aéroport comme clef.
 
@@ -220,8 +219,7 @@ Procédez de même pour afficher les balises. Vous pouvez utiliser une icone sp�
 
 
 ### Liste des plans de vol
-Nous allons maintenant afficher une liste des plans de vols à gauche de notre page.
-Pour cela vous devez modifier votre mise en page avec Bootstrap pour avoir une colone de la largeur 3 pour la liste des vols et une autre de largeur 9 pour la carte.
+Pour afficher une liste des plans de vols à gauche de la page vous devez modifier votre mise en page avec Bootstrap pour avoir une colonne de la largeur 3 pour la liste des vols et une autre de largeur 9 pour la carte.
 Créez ensuite un composant Fpls.js qui récupère les plans de vols et ajoutez le à votre application.
 
 Pour créer le contenu du composant, vous pouvez utiliser les composants [ListGroup et ListItem](https://react-bootstrap.github.io/components/list-group/) de React bootstrap.
@@ -245,7 +243,7 @@ Pensez à donner une hauteur à votre composant ListGroup afin qu'il s'affiche c
 </details>
 
 ### Sélection de plan de vol - Les états
-Pour sélectionner des plan de vol dans la liste, nous allons créer un état selection qui gardera en mémoire les IDs des plans de vols sélectionnés.
+Pour sélectionner des plan de vol dans la liste, vous pouvez créer un état selection qui gardera en mémoire les IDs des plans de vols sélectionnés.
 Pour comprendre le fonctionnement des états en React je conseille la lecture de cet [article](https://fr.reactjs.org/docs/hooks-state.html).
 Lorsqu'un état est mis à jour dans l'application, React s'occupe de mettre à jour les composants qui utilisent cet état.
 
@@ -262,8 +260,8 @@ const [selection, setSelection] = useState([]);
 Dans notre application, on souhaite que l'apparence d'un vol sélectionné soit dépendante de la présence de ce vol dans l'état de selection (en utilisant par exemple la propriété active= (true or false) de ListGroupItem).
 Essayer votre code en initialisant l'état selection avec quelques IDS de vols existants;
 
-Pour modifier notre état selection, nous devons ajouter un abonnement à l'évenement click des ListGroupItem.
-Par exemple nous pouvons appeler la fonction update selection qui mettra à jour l'état de selection avec l'id du plan de vol correspondant.
+Pour modifier  l'état selection, ajoutez un abonnement à l'évenement click des ListGroupItem.
+Par exemple vous pouvez appeler la fonction updateSelection qui mettra à jour l'état de selection avec l'id du plan de vol correspondant.
 
 ```javascript
 onClick={() => toggleSelection(fpl.id)}>
@@ -281,13 +279,7 @@ Vous devez maintenant avoir une liste fonctionnelle qui met à jour la liste des
 Pour faire le lien entre le composant Fpls et Map, il est conseillé de créer un composant container FplsMap.js qui s'occupera des données d'état et passera celle ci comme des props aux composants Fpls et Map.
 Modifier votre architecture pour utiliser ces nouveau composants et faire en sorte que l'état sélection soit dans le composant FplsMap.js.
 
-Deux états seront utilisés (il est possible de faire avec un seul mais cela permet de ne pas trop modifier le code fait jusqu'à présent) dans le composant FplsMap qui seront passés aux composants Fpls et Map comme des props.
-
-```javascript
-const [selection, setSelection] = useState([]);
-const [selected_fpls, setSelectedFpls] = useState([]);
-```
-
+L'état de selection sera situé dans le composant FplsMap qui le passera aux composants Fpls et Map comme des props.
 La méthode toggleSelection doit être déplacée dans FplsMap également et fournie au composant Fpls comme props.
 
 <details>
@@ -302,19 +294,17 @@ La méthode toggleSelection doit être déplacée dans FplsMap également et fou
             </Col>
             <Col xs={9}>
                 <h4>Carte</h4>
-                <Map airports={props.airports} beacons={props.beacons} fpls={selected_fpls}/>
+                <Map airports={props.airports} beacons={props.beacons} fpls={props.fpls} selection={selection}/>
             </Col>
     </Row>
   ```
 </details>
 
-Vous devez avoir un comportement similaire à celui précédemment mais avec une nouvelle architecture.
+Vous devez avoir un comportement similaire à celui précédemment mais avec une nouvelle architecture avant de poursuivre.
 
 ### Affichage des Plans de vols selectionnés.
-Pour afficher les plans de vols sélectionnés, le composant carte utilisera les données de l'état selected_fpls.
-Commencer par modifier cet état lorsque la l'état sélection est modifié.
-Pour cela nous pouvons utiliser un [effet React](https://fr.reactjs.org/docs/hooks-reference.html#useeffect) qui modifiera la liste des plans de vols selectionnés lorsque l'état selection est modifié.
-Pour faciliter la création d'une liste de plan de vol à partir d'un Id dans la selection, vous pouvez créer un dictionnaire des plans de vols par id.
+Pour afficher les plans de vols sélectionnés, le composant carte utilisera les données des plans de vol et de la selection.
+Pour faciliter l'utilisation de ces données, vous pouvez créer un dictionnaire des plans de vol par ID. Ce dictionnaire vous permettra ensuite de construire une liste des plans de vols sélectionnés à partir de leurs IDs.
 Une façon courante de réaliser cette opréation en javascript se fait avec l'utilisation de la fonction [reduce](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/reduce).
 
 ```javascript
@@ -327,26 +317,15 @@ const fpls_dict = fpls.reduce((a,x) => ({...a, [x.id]: x}), {});
   <summary>Aide</summary>
   
 ```javascript
-useEffect(
-        () => {
-            if(selection.length>0){
-                setSelectedFpls(selection.map(id => fpls_dict[id]));
-            }else{
-                setSelectedFpls([]);
-            }
-        },
-        [selection],
-    );
-
+ const selected_fpls = props.selection.map((id) => fpls_dict[id]);
   ```
 </details>
 
-Nous avons donc désormais une liste de plan de vol qui est mise à jour lorsque la selection dans la liste change.
-Cette liste étant fournie au composant Map comme props. Nous allons nous en servir pour afficher les plans de vols sur la carte.
-
+Vous devez avoir une liste de plan de vol qui est mise à jour lorsque la selection dans la liste change.
+Cette liste étant fournie au composant Map comme props. Vous allez vous en servir pour afficher les plans de vols sur la carte.
 
 Un plan de vol contient une aéroport de départ et une liste de balise.
-Pour l'afficher sur la carte nous pouvons utiliser un composant Leaflet [Polyline](https://react-leaflet.js.org/docs/api-components#polyline) que l'on construit à partir d'une liste de corrdonnées GPS.
+Pour l'afficher sur la carte vous devez utiliser un composant Leaflet [Polyline](https://react-leaflet.js.org/docs/api-components#polyline) que l'on construit à partir d'une liste de coordonnées GPS.
 Ainsi, pour chaque élements du plan de vol il faut récupérer les coordonnées GPS et les ajouter dans un tableau.
 ```html
  <Polyline
@@ -359,7 +338,7 @@ Pour obtenir ces coordonnées plus simplement, vous pouvez créer un dictionnair
 ````javascript
 const coords_dict = {...airports_dict, ...beacons_dict};
 ````
-En parcourant ce dictionnaire pour l'aéroport de départ, la liste des balises et l'aéroport d'arrivée vous povez construire la listes des posisiotns nécessaires.
+En parcourant ce dictionnaire pour l'aéroport de départ, la liste des balises et l'aéroport d'arrivée vous pouvez construire la listes des positions nécessaires.
 <details>
 
   <summary>Aide</summary>
@@ -376,9 +355,68 @@ En parcourant ce dictionnaire pour l'aéroport de départ, la liste des balises 
 ```
 </details>
 
-Améliorez l'affichage en ajoutant des Markers pour chaque balises du plan de vol en indiquant le nom, le temps de passage et l'altitude.
+Améliorez l'affichage en ajoutant des Markers ou des Cercles pour chaque balises du plan de vol en indiquant le nom, le temps de passage et l'altitude.
+
+# Troisième partie : Modification d'un plan de vol
+Vous allez maintenant réaliser des interactions permettant de modifier un plan de vol.
+La modification consistera à changer l'altitude (ou level) pour une balise avec un formulaire.
+Lorsque l'utilisateur selectionne une balise du plan de vol, un formulaire permet de sélectionner une nouvelle valeur pour le niveau et un bouton permet de valider la modification.
+Dès qu'il y a une modification, le plan de vol sélectionner doit afficher une modification dans son étiquette et la balise doit changer de couleur pour indiquer un changement non-validé.
+Lorsque le changement est validé, le plan de vol est modifié et les indiquations de changement disparaissent.
+
+Réflechissez aux changements d'architecture et aux liens entre états et composants que vous allez devoir mettre en oeuvre.
+Plusieurs solutions sont possibles. Dans ce BE, deux façons sont proposées. L'une sans librairies supplémentaires, l'autre avec l'utilisation d'un store Redux.
+
+## Solution 1 : sans Redux
+Pour réaliser l'interaction sans redux, vous allez devoir changer les plans de vols en état dans le composant App. 
+Vous devez également ajouter une méthode permettant de mettre à jour l'état à partir d'un nouveau plan de vol.
+Cette méthode devra être passée en props aux composants enfants afin qu'un click sur le bouton modifier d'une balise d'un plan de vol déclenche la mise à jour.
+ <details>
+ 
+   <summary>Aide</summary>
+   
+````javascript
+   const [fpls, setFpls] = useState(data_fpls);
+
+   const update_Fpls = function(new_fpl){
+           const new_fpls = fpls.map(fpl =>
+               fpl.id === new_fpl.id
+                   ? new_fpl
+                   : fpl);
+           setFpls(new_fpls);
+       };
+```` 
+</details>
+ 
+
+Dans le composant FplsMap, vous devez également ajouter un état edité qui stockera si un plan de vol est entrain d'être modifié.
+Vous devez également créer un nouveau composant FplCircle qui affichera le formulaire de modification de niveau de vol et le bouton de validation.
+Ce composant devra posséder un état interne stockant le nouveau niveau à mettre à jour lors du click.
+Voici un exemple possible pour le formulaire à intégrer dans la popup du marker pour la balise.
+
+````javascript
+ <form>
+    <label>Modifier le niveau</label>
+    <input id="input-speed" type="number" value={level} onChange={(event) => update_state(event.target.value)}/>
+    <button type="button" onClick={submit_new_fpl}>Save</button>
+</form>
+```` 
+  
+
+le composant Map final peut ressembler à ceci : 
+
+````javascript
+ <Map airports={props.airports} beacons={props.beacons} selection={selection} fpls={props.fpls} onSubmitFpl={update_fpl} onUpdateFpl={updateUpdatedFplId}/>
+```` 
+
+Le props onSubmit et onUpdated passeront des callbacks permettant respectivement de modifier un plan de vol pour toute l'application et de signaler qu'un plan de vol est entrain d'être modifié.
 
 
-# Troisième partie : Modification d'un plan de vol et store Redux
-TBD
-
+Vérifiez que votre applications fonctionne en modifiant des plans de vol.
+Bonus, vous pouvez changer la couleur d'une balise lorsqu'elle est modifiée mais pas validée en utilisant la propriété mutable du composant Circle 
+````javascript
+<Circle center={props.center}
+            radius = {8000}
+            pathOptions= {{color : props.beacon.level == level ? "purple" : "red"}}
+            key={props.beacon.name}>
+````

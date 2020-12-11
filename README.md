@@ -153,9 +153,16 @@ Vous afficherez ensuite les plans de vols dans une liste puis, lorsqu'ils sont s
 Vous allez créer un composant Map qui sera affichée dans la page Carte en dessous du titre.
 Vous pouvez utiliser [React Leaflet](https://react-leaflet.js.org/) pour faciliter l'intégration d'une carte Leaflet.
 Suivez les exemples pour afficher une carte centrée sur la france lors de l'affichage de la page.
-Pensez à ajouter du style à vos composant via un fichier Map.css que vous chargerez das votre composant.
+Pensez à ajouter du style à vos composant via un fichier Map.css que vous chargerez das votre composant. Le composant MapContainer de ReactLealft a comme nom de classe leaflet-container.
 Il vous faut une largeur de 100% et une hauteur minimale pas trop faible.
 Pensez à mettre en forme la page avec des composants bootstrap.
+
+````css
+.leaflet-container {
+    width: 100%;
+    height: 60vh;
+}
+````
 
 
 ### Ajout de markers sur la carte (beacons et aéroport)
@@ -561,5 +568,5 @@ Modifier le reste de l'application pour avoir le formulaire de modification de n
 
 
 ## Historique des modifications
-Pour ajouter des fonctionnalité Undo/Redo des modifications des plan de vols à notre application, vous pouvez utiliser [redux-undo](https://github.com/omnidan/redux-undo). 
+Pour ajouter des fonctionnalités Undo/Redo des modifications des plan de vols à notre application, vous pouvez utiliser [redux-undo](https://github.com/omnidan/redux-undo). 
 Il s'agit de stocker un historique des états des plans de vols et d'ajouter des reducers permettant de naviguer dans cet historique.

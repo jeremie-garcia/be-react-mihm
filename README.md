@@ -420,3 +420,146 @@ Bonus, vous pouvez changer la couleur d'une balise lorsqu'elle est modifiée mai
             pathOptions= {{color : props.beacon.level == level ? "purple" : "red"}}
             key={props.beacon.name}>
 ````
+
+## Solution 2 : avec Redux
+
+[Redux](https://redux.js.org/introduction/getting-started) est un container d'état qui est très bien intégré à React.
+Redux utilise un pattern Flux avec un seul état global à l'application (comme une base de données) et des actions permettant de mettre à jour les données.
+
+Pour l'utilisez vous devez installer Redux en utilisant la commande : 
+
+```shell script
+npm install --save redux react-redux @reduxjs/toolkit
+```
+
+Vous utiliserez également 
+* [React-Redux](https://react-redux.js.org/introduction/quick-start) qui perment aux composants React de lire des données depuis un store Redux et de dispatcher les actions pour mettre à jour le store.
+* [Redux-toolkit](https://redux-toolkit.js.org/introduction/quick-start) qui permet de simplifier la mise en place et la configuration d'un store Redux.
+
+Vous devez lire ces tutoriels pour comprendre le fonctionnement de Redux avant de commencer.
+
+
+### Création du store
+
+Vous devez créer un store Redux contenant vos données et états et l'ajouter à l'index de votre application.
+
+
+```javascript
+<store.js>
+import { configureStore } from '@reduxjs/toolkit';
+import fplsReducer from '../features/fpls/fplsSlice';
+import beaconsReducer from '../features/beacons/beaconsSlice';
+import airportReducer from '../features/airports/airportSlice';
+
+
+export default configureStore({
+    reducer: {
+        fpls: fplsReducer,
+        selection: selectionReducer,
+        updating: updatingReducer,
+        beacons: beaconsReducer,
+        airport: airportReducer,
+    },
+});
+```
+
+```javascript
+<app.js>
+  <Provider store={store}>
+          <App />
+  </Provider>
+```
+
+le store peut être vu comme une base de données partagée avec l'ensemble de l'application React.
+Le store est découpé en plusieurs slices ou tranches qui seront des données ou état mutables de votre applications.
+Dans votre application certains états comme les balises ne seront jamais modifié.
+On utilise des selectors (à peu près équivalent à une requète GET) pour lire les valeurs des états et des Reducers (équivalent de méthode POST) pour modifier les états.
+Lorsqu'un état est modifié, tous les sélecteurs concernés sont mis à jour et les composants dont ils dépendent.
+
+
+### Création des slices
+Il vous faut créer, pour chacunes des slices, les états et actions correspondants.
+Vous pouvez utiliser l'outil createSlide de Redux-Toolkit pour accélérer le travail (qui reste tout de même assez long).
+
+Voici un exemple pour la sélection
+
+```javascript
+import {createSlice} from '@reduxjs/toolkit'
+
+const data = require('../../db/FPL-20180119-extract');
+export const fplsSlice = createSlice({
+    name: 'fpls',
+    initialState: {
+        value: data.fpls
+    },
+    reducers: {
+        updateFpls: (state, action) => {
+            state.value = state.value.map(fpl =>
+                fpl.id === action.payload.id
+                    ? action.payload
+                    : fpl)
+        }
+    }
+})
+
+export const selectFpls = state => state.fpls.value;
+export const {updateFpls} = fplsSlice.actions
+export default fplsSlice.reducer
+```
+
+
+L'état est défini par un nom et un champ value. Cette value contient la liste des Fpls et est initialisé avec le contenu du fichier data.json.
+Un seul reducer est disponible pour mettre à jour un plan de vol. Ce reducer prends en paramètre une action avec sa payload. C'est via cette 'charge utile' que l'on peut passer des arguments aux reducers avec Redux.
+A la fin du fichier, on exporte les éléments qui seront utilisés par d'autres modules dans notre application. En particulier, selectFpls est une fonction qui permettra à n'importe quel composant React de récupérer les données.
+
+### Utilisation des états dans les composants
+Pour utiliser les état du store dans les composants, il faut utiliser la fonction useSelector et les différents selecteurs que vous avez définis dans les slices.
+Ainsi le code suivant permet de lire les données des plans de vol depuis n'importe quel composant de l'application.
+
+````javascript
+import {useSelector} from "react-redux";
+import {selectFpls} from "../../features/fpls/fplsSlice";
+const fpls = useSelector(selectFpls);
+````
+
+Transformez votre application pour remplacer l'utilisation des données airports, balises, fpls, selection et updating en props par l'utilisation des selecteurs.
+  
+
+### Modification des états dans les composants
+Pour modifier un état depuis un composant, il faut utiliser la fonction dispatch avec vos reducers définis dans les slices du store.
+Par exemple, la modification de sélection peut se faire de la façon suivante :
+
+````javascript
+import {useSelector, useDispatch} from "react-redux";
+import {selectFpls} from "../../features/fpls/fplsSlice";
+import {selectSelection, toggle} from "../../features/selection/selectionSlice";
+import {selectUpdating} from "../../features/updating/updatingSlice";
+
+function Fpls(props) {
+
+    const fpls = useSelector(selectFpls);
+    const selection = useSelector(selectSelection);
+    const updating = useSelector(selectUpdating);
+
+    const dispatch = useDispatch();
+
+    const fpls_items = fpls.map((fpl) => (
+        <ListGroupItem
+            active={selection.includes(fpl.id)}
+            key={fpl.id}
+            onClick={() => dispatch(toggle(fpl.id))}>
+            <p>{fpl.d_airport} &rarr; {fpl.a_airport} {updating.includes(fpl.id) ? '*' : ''}</p>
+            <small>{fpl.id} -- {fpl.aircraft_type}</small>
+        </ListGroupItem>));
+
+````
+
+La fonction onClick de l'élément déclenche la fonction dispatch avec la fonction du reducer à effectuer.
+Ceci permettra de modifier l'état de la sélection et de mettre à jour tous les composants dépendants de la sélection (via le useSelector).
+
+Modifier le reste de l'application pour avoir le formulaire de modification de niveau du plan de vol disponible et fonctionnel.
+
+
+## Historique des modifications
+Pour ajouter des fonctionnalité Undo/Redo des modifications des plan de vols à notre application, vous pouvez utiliser [redux-undo](https://github.com/omnidan/redux-undo). 
+Il s'agit de stocker un historique des états des plans de vols et d'ajouter des reducers permettant de naviguer dans cet historique.

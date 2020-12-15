@@ -1,0 +1,17 @@
+.App {
+    background-color: snow;
+    height: 100%;
+    margin-bottom: 100px;
+}
+
+.container{
+    height: 100%;
+}
+
+.jumbotron{
+    background-color: #e9c46a;
+}
+
+.wrapper{
+    margin-bottom: 100px;
+}

@@ -59,11 +59,11 @@ En particulier, les composants suivants vous seront utiles.
 ```javascript
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route, Link
 } from "react-router-dom";
 ```
-Vous pouvez vous inspirer d'exemples comme ceux de [basic_router](https://gist.github.com/siakaramalegos/df4620c52e829f6107c75d5c3f0ad7f5) ou [react-router](https://reactrouter.com/web/guides/quick-start).
+Vous pouvez vous inspirer d'exemples comme ceux de [basic_router](https://www.w3schools.com/react/react_router.asp).
 Les pages au contenu dynamique (balises et carte) seront traitées un peu plus tard mais pour l'instant vous ajouterez une balise h1 avec un titre correspondant à la page.
 
 
@@ -77,7 +77,7 @@ npm install --save react-bootstrap bootstrap
 Pour utiliser bootsrap comme feuille de style, il faut l'inclure dans le fichier index.js avec la ligne suivante :
 import 'bootstrap/dist/css/bootstrap.css';
 
-Utilisez ce contenu et des composants bootstrap (Jumbotron, Container, Row, Col) pour réaliser la page home.
+Utilisez ce contenu et des composants bootstrap (Container, Row, Col) pour réaliser la page home.
 
 
 ```html
